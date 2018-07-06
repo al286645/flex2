@@ -299,6 +299,7 @@ class GenomeScene(QGraphicsScene):
         self.blastFamilies = []
         self.fosmidSize = int(settings['fosmidSize'])
         self.displayType = settings['displayType']
+        self.nameList = []
         #self.setSceneRect(0 , 0, 25000, 25000)
 
     def createChromosome(self, w, name, x, y, sequence = None):
@@ -309,6 +310,7 @@ class GenomeScene(QGraphicsScene):
         self.chrList.append(chr)
         self.addItem(chr)
         self.views()[0].fitNewObject()
+        self.nameList.append(goodName)
         return chr
 
     def createBlastFamily(self, parents):
@@ -340,9 +342,6 @@ class GenomeScene(QGraphicsScene):
 
     def checkChromosomeNames(self, name):
         print('checking name')
-        nameList = []
-        for chr in self.chrList:
-            nameList.append(chr.name)
         if name in nameList:
             i = 1
             while i > 0:
