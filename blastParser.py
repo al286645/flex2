@@ -26,9 +26,9 @@ class BlastFamily():
                 if set(BlastHit.seq1pos + BlastHit.seq2pos) == set(tuple):
                     ownHits += 1
                     break
-            else:
-                cleanList.append(BlastHit)
-                tupleList.append((BlastHit.seq1pos + BlastHit.seq2pos))
+                else:
+                    cleanList.append(BlastHit)
+                    tupleList.append((BlastHit.seq1pos + BlastHit.seq2pos))
 
         print('{0} duplicate hits removed, family now contains {1} hits'.format(ownHits, len(cleanList)))
         self.blastList = cleanList
@@ -108,7 +108,7 @@ class BlastFamily():
         mergeCandidates = []
 
         #Get merge parameters
-        for i in range(0, len(blastList) - 1):
+        for i in range(0, len(blastList) - 2):
             fstBlast = blastList[i]
             scdBlast = blastList[i + 1]
             pos1Dtce = (scdBlast.seq1pos[0] - fstBlast.seq1pos[1] + 0.1)
@@ -145,7 +145,7 @@ class BlastFamily():
 
         # Merge concatenated pairs (merge pairs that have a blast hit in common)
         i = 0
-        while i < len(mergeCandidates) - 1:
+        while i < len(mergeCandidates) - 2:
             if mergeCandidates[i][-1] == mergeCandidates[i + 1][0]:
                 newList = [mergeCandidates[i][0], mergeCandidates[i + 1][1]]
                 mergeCandidates[i] = newList
@@ -183,7 +183,7 @@ class BlastFamily():
             filehandle.write(line1+line2)
 
     def diagnose(self):
-        for i in range(0, len(self.blastList)-1):
+        for i in range(0, len(self.blastList)-2):
             currHit = self.blastList[i]
             nextHit = self.blastList[i+1]
 
@@ -246,7 +246,7 @@ class BlastFamily():
 
             # Iterate over bins
             noResults = True
-            for j in range(0, len(bins) - 2):
+            for j in range(0, len(bins) - 3):
                 currBin = bins[j]
                 nextBin = bins[j + 1]
                 futBin = bins[j + 2]
